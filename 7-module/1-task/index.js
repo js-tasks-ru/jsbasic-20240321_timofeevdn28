@@ -49,20 +49,12 @@ export default class RibbonMenu {
       arrowLeft.classList.remove('ribbon__arrow_visible');
     }
 
-    arrowLeft.addEventListener('pointerdown', () => {
-      ribbon.scrollBy({
-        top: 0,
-        left: -350,
-        behavior: 'smooth'
-      });
+    arrowLeft.addEventListener('click', () => {
+      ribbon.scrollBy(-350, 0);
     });
 
-    arrowRight.addEventListener('pointerdown', () => {
-      ribbon.scrollBy({
-        top: 0,
-        left: 350,
-        behavior: 'smooth'
-      });
+    arrowRight.addEventListener('click', () => {
+      ribbon.scrollBy(350, 0);
     });
 
     ribbon.addEventListener('scroll', () => {
@@ -88,7 +80,7 @@ export default class RibbonMenu {
   #choiceProduct() {
     let products = this.elem.querySelectorAll('.ribbon__item');
 
-    this.elem.addEventListener('pointerdown', (e) => {
+    this.elem.addEventListener('click', (e) => {
       if (e.target.matches('.ribbon__item')) {
         products.forEach(product => {
           if (product.matches('.ribbon__item_active')) {
