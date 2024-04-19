@@ -98,14 +98,14 @@ export default class RibbonMenu {
 
         e.preventDefault();
         e.target.classList.add('ribbon__item_active');
+
+        const event = new CustomEvent('ribbon-select', {
+          detail: e.target.dataset.id,
+          bubbles: true
+        });
+
+        this.elem.dispatchEvent(event);
       }
-
-      const event = new CustomEvent('ribbon-select', {
-        detail: e.target.dataset.id,
-        bubbles: true
-      });
-
-      this.elem.dispatchEvent(event);
     });
   }
 
