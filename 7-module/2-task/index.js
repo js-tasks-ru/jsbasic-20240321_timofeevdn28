@@ -1,7 +1,9 @@
-import createElement from '../../assets/lib/create-element.js';
-
 export default class Modal {
   constructor() {
+    this.#createModal();
+  }
+
+  #createModal() {
     this.modal = document.createElement('div');
     this.modal.classList.add('modal');
 
