@@ -106,13 +106,6 @@ export default class StepSlider {
     document.addEventListener('pointermove', this.#pointerMoveHandler);
     document.addEventListener('pointerup', this.#pointerUpHandler);
     this.elem.classList.add('slider_dragging');
-
-    const event = new CustomEvent('slider-change', {
-      detail: this.value,
-      bubbles: true
-    });
-
-    this.elem.dispatchEvent(event);
   }
 
   #createElem() {
