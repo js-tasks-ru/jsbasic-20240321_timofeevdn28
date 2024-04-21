@@ -52,6 +52,17 @@ export default class StepSlider {
     });
   }
 
+  #setValue(textValue, styleValue) {
+    let thumb = this.elem.querySelector('.slider__thumb');
+    let progress = this.elem.querySelector('.slider__progress');
+    let sliderValue = this.elem.querySelector('.slider__value');
+
+    sliderValue.textContent = textValue;
+    this.#setSliderStep(textValue);
+    thumb.style.left = `${styleValue}%`;
+    progress.style.width = `${styleValue}%`;
+  }
+
   #pointerUpHandler = () => {
     document.removeEventListener('pointermove', this.#pointerMoveHandler);
     document.removeEventListener('pointerup', this.#pointerUpHandler);
@@ -64,17 +75,6 @@ export default class StepSlider {
     });
 
     this.elem.dispatchEvent(event);
-  }
-
-  #setValue(textValue, styleValue) {
-    let thumb = this.elem.querySelector('.slider__thumb');
-    let progress = this.elem.querySelector('.slider__progress');
-    let sliderValue = this.elem.querySelector('.slider__value');
-
-    sliderValue.textContent = textValue;
-    this.#setSliderStep(textValue);
-    thumb.style.left = `${styleValue}%`;
-    progress.style.width = `${styleValue}%`;
   }
 
   #pointerMoveHandler = (e) => {
@@ -103,9 +103,19 @@ export default class StepSlider {
 
     this.#setValue(this.value, valuePercents);
 
+    const event = new CustomEvent('slider-change', {
+      detail: this.value,
+      bubbles: true
+    });
+
+    this.elem.dispatchEvent(event);
+  }
+
+  #elemPointerdownHandler = () => {
+    this.elem.classList.add('slider_dragging');
+
     document.addEventListener('pointermove', this.#pointerMoveHandler);
     document.addEventListener('pointerup', this.#pointerUpHandler);
-    this.elem.classList.add('slider_dragging');
   }
 
   #createElem() {
@@ -113,8 +123,10 @@ export default class StepSlider {
     this.elem.classList.add('slider');
 
     this.elem.insertAdjacentHTML('afterBegin', this.#createTemplate());
-    this.elem.addEventListener('dragstart', (e) => e.preventDefault());
 
-    this.elem.addEventListener('pointerdown', this.#elemClickHandler);
+    this.elem.addEventListener('click', this.#elemClickHandler);
+    let thumb = this.elem.querySelector('.slider__thumb');
+    thumb.addEventListener('dragstart', (e) => e.preventDefault());
+    thumb.addEventListener('pointerdown', this.#elemPointerdownHandler);
   }
 }
