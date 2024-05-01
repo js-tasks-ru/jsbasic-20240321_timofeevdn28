@@ -208,11 +208,12 @@ export default class Cart {
 
     this.modal.open();
     this.modal.setTitle('Your order');
-    this.modal.setBody(this.createCartBody());
+    const modalBody = this.createCartBody();
+    this.modal.setBody(modalBody);
 
-    this.productElements = document.querySelectorAll('.cart-product');
-    this.submitBtnElement = document.querySelector('.cart-buttons__button.btn-group__button.button');
-    this.formElement = document.querySelector('.cart-form');
+    this.productElements = modalBody.querySelectorAll('.cart-product');
+    this.submitBtnElement = modalBody.querySelector('.cart-buttons__button.btn-group__button.button');
+    this.formElement = modalBody.querySelector('.cart-form');
     this.modalBody = this.modal.bodyElement;
     this.createCartListeners();
   }
