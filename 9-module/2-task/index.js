@@ -55,8 +55,6 @@ export default class Main {
     } catch (error) {
       console.error(error);
     }
-
-    return new Promise((resolve) => { resolve(); });
   }
 
   createEventListeners() {
