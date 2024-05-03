@@ -10,6 +10,14 @@ export default class StepSlider {
     this.#createElem();
   }
 
+  #setStartProgress() {
+    if (this.value === 0) {
+      return 0;
+    }
+
+    return this.value / this.segments * 100;
+  }
+
   #createSteps() {
     let steps = [];
 
@@ -26,11 +34,11 @@ export default class StepSlider {
 
   #createTemplate() {
     return `
-      <div class="slider__thumb">
-        <span class="slider__value">0</span>
+      <div class="slider__thumb" style="left: ${this.#setStartProgress()}%">
+        <span class="slider__value">${this.value}</span>
       </div>
 
-      <div class="slider__progress"></div>
+      <div class="slider__progress" style="width: ${this.#setStartProgress()}%"></div>
 
       <div class="slider__steps">
         ${this.#createSteps().join('\n')}
